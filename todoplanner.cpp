@@ -34,6 +34,10 @@ public:
 //main integer
 int main()
 {
+
+    char input_option;
+    int input_id;
+
     //version
     string version = "v-1.0.0";
     //todoitem list
@@ -45,9 +49,9 @@ int main()
     //todoitem loop to show items constantly
     TodoItems.clear();
 
-    TodoItem test;
-    test.create("this is a test");
-    TodoItems.push_back(test);
+    //TodoItem test;
+    //test.create("this is a test");
+    //TodoItems.push_back(test);
 
 
     while (1)
@@ -59,16 +63,46 @@ int main()
 
         for (it = TodoItems.begin(); it != TodoItems.end(); it++)
         {
-            cout << it->getId() << " | " << it->getDescription() << " | " << it->isCompleted() << endl;
+            string completed = it->isCompleted() ? "done" : "not done";
+
+            cout << it->getId() << " | " << it->getDescription() << " | " << completed << endl;
 
         }
+        if (TodoItems.empty())
+        {
+            cout<<"Add your Todo!"<<endl;
 
-        break;
+        }
+        cout<<"[a]dd a new Todo"<<endl;
+        cout<<"[c]omplete a Todo"<<endl;
+        cout<<"[q]uit"<<endl;
+
+        cout<<"choice: ";
+
+        cin>>input_option;
+
+        if(input_option == 'q')
+        {
+            cout<<"YOU TRAITOR!!!"<<endl;
+            break;
+        } else if(input_option == 'c')
+        {
+            cout<<"Enter id to mark completed"<<endl;
+            cin>>input_id;
+
+
+            for (it = TodoItems.begin(); it != TodoItems.end(); it++)
+        {
+           if(input_id == it->getId())
+           {
+            it->serCompleted(true);
+            break;
+           }
+        }
+
+
+
+        }
     }
-
-
-
-
-
     return 0;
 }
