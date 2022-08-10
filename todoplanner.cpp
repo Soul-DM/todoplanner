@@ -3,6 +3,8 @@
 #include<string>
 #include<list>
 #include<ctime>
+#include<fstream>
+#include<vector>
 using namespace std;
 
 //TodItem class number 1 
@@ -41,6 +43,7 @@ int main()
     string input_description;
     //version
     string version = "v-1.0.0";
+   
     //todoitem list
     list<TodoItem> TodoItems;
     list<TodoItem>::iterator it;
@@ -70,6 +73,7 @@ int main()
         
         cout<<"[a]dd a new Task"<<endl;
         cout<<"[c]omplete a Task"<<endl;
+        cout<<"[s]how tasks"<<endl;
         cout<<"[q]uit"<<endl;
         cout<<"choice: ";
 
@@ -91,6 +95,12 @@ int main()
             TodoItem newItem;
             newItem.create(input_description);
             TodoItems.push_back(newItem);
+            
+            fstream txt("C:\\Users\\sasas\\Desktop\\save.txt");
+            for(auto& it:TodoItems)
+            {
+                txt<<it.getDescription()<<endl;
+            }
         }
 //changing the status of a task
         else if(input_option == 'c')
@@ -107,6 +117,21 @@ int main()
            }
         }
         }
+        else if(input_option == 's')
+        {
+            fstream txt("C:\\Users\\sasas\\Desktop\\save.txt");
+            TodoItems.clear();
+            
+            while (! txt.eof()) 
+            {
+                getline(txt, input_description);
+                TodoItem newItem;
+                newItem.create(input_description);
+                TodoItems.push_back(newItem);    
+            }
+
+        }
+
     }
     return 0;
 }
