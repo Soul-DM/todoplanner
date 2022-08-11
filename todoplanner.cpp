@@ -25,11 +25,11 @@ public:
         description = new_description;
         return true;
     }
+    void setId(int id){this->id = id;}
 
-
-    int getId() { return id; }
-    string getDescription() { return description; }
-    bool isCompleted() { return completed; }
+    int getId() const{ return id; }
+    string getDescription() const{ return description; }
+    bool isCompleted() const{ return completed; }
 
     void setCompleted(bool val) {completed = val;}
 
@@ -42,7 +42,7 @@ int main()
     int input_id;
     string input_description;
     //version
-    string version = "v-1.0.0";
+    string version = "v-1.0.2";
    
     //todoitem list
     list<TodoItem> TodoItems;
@@ -99,7 +99,8 @@ int main()
             fstream txt("C:\\Users\\sasas\\Desktop\\save.txt");
             for(auto& it:TodoItems)
             {
-                txt<<it.getDescription()<<endl;
+                txt<<it.getId()<<" "<<it.getDescription()<<endl;
+                
             }
         }
 //changing the status of a task
@@ -117,17 +118,22 @@ int main()
            }
         }
         }
+//saving tasks and looking them up
         else if(input_option == 's')
         {
             fstream txt("C:\\Users\\sasas\\Desktop\\save.txt");
             TodoItems.clear();
-            
+            int id;
             while (! txt.eof()) 
             {
+                txt>>id;
                 getline(txt, input_description);
                 TodoItem newItem;
+                newItem.setId(id);
                 newItem.create(input_description);
                 TodoItems.push_back(newItem);    
+
+                break;
             }
 
         }
